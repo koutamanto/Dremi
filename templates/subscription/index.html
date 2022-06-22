@@ -1,0 +1,48 @@
+{% extends "parent.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col" align="center">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading text-center">
+                    見放題プランへの登録方法
+                </h4>
+                <p>
+                    月たった5000円ですべての有料動画が見放題になります。
+                </p>
+                <hr>
+                <p class="mb-0">
+                    以下のPayPalボタンから決済をしてください。決済が完了すると、ホーム画面に戻り、全ての有料動画が見放題になります。
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    console.log(document.cookie.split("user_id="))
+    console.log(document.referrer)
+    if("{{ user_id }}" != "")
+    {
+        document.cookie = "user_id={{ user_id }}";
+        document.getElementsByClassName("upload_video")[0].removeAttribute("hidden");
+    }
+    else
+    {
+        if(!document.cookie.search("user_id="))
+        {
+            if(document.cookie.split("user_id=")[1].split(";")[0])
+            {
+                document.getElementsByClassName("upload_video")[0].removeAttribute("hidden");
+            }
+            else
+            {
+                location.href = "/mypage/login";
+            }    
+        }
+        else
+        {
+            location.href = "/mypage/login";
+        }
+    }
+</script>
+{% endblock %}

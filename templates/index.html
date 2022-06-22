@@ -1,0 +1,75 @@
+{% extends "parent.html" %}
+{% block content %}
+<div class="mt-5">
+    <div class="container-xs d-block d-sm-none">
+        {% for info in infos %}
+        <div class="row">
+        <div class="col" align="center">
+            <a href="/watch/{{ info.video_id[0] }}"><img src="{{ info.thumb_url[0] }}" width="80%"></a>
+                <h3>{{ info.title[0] }}</h3>
+            </div>
+        </div>
+        {% endfor %} 
+    </div>
+    <div class="container-sm d-sm-block d-none d-md-none">
+        {% for info in infos %}
+        <div class="row">
+            <div class="col">
+                <a href="/watch/{{ info.video_id[0] }}"><img src="{{ info.thumb_url[0] }}" width="80%"></a>
+                <h3>{{ info.title[0] }}</h3>
+            </div>
+        </div>
+        {% endfor %} 
+    </div>
+    <div class="container-md d-md-block d-none d-lg-none">
+        {% for infos_row in infos|batch(2) %}
+        <div class="row">
+        {% for info in infos_row %}
+            <div class="col">
+                <a href="/watch/{{ info.video_id[0] }}"><img src="{{ info.thumb_url[0] }}" style="width:30vw;"></a>
+                <h3>{{ info.title[0] }}</h3>
+            </div>
+        {% endfor %}
+        </div>
+        {% endfor %}  
+    </div>
+    <div class="container-lg  d-lg-block d-none d-xl-none">
+        {% for infos_row in infos|batch(2) %}
+        <div class="row">
+        {% for info in infos_row %}
+            <div class="col">
+                <a href="/watch/{{ info.video_id[0] }}"><img src="{{ info.thumb_url[0] }}" style="width:30vw;"></a>
+                <h3>{{ info.title[0] }}</h3>
+            </div>
+        {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="container-xl d-xl-block d-none d-xxl-none">
+        {% for infos_row in infos|batch(3) %}
+        <div class="row">
+        {% for info in infos_row %}
+            <div class="col">
+                <a href="/watch/{{ info.video_id[0] }}"><img src="{{ info.thumb_url[0] }}"  style="width:20vw"></a>
+                <h3>{{ info.title[0] }}</h3>
+            </div>
+        {% endfor %}
+        </div>
+        {% endfor %} 
+    </div>
+    <div class="container-xxl d-xxl-block d-none">
+        {% for infos_row in infos|batch(4) %}
+        <div class="row">
+        {% for info in infos_row %}
+            <div class="col">
+                <a href="/watch/{{ info.video_id[0] }}"><img src="{{ info.thumb_url[0] }}"  style="width:15vw"></a>
+                <h3>{{ info.title[0] }}</h3>
+            </div>
+        {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    <hr style="margin-bottom: 5vh;">
+</div>
+
+{% endblock %}

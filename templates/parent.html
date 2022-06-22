@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dremi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href='{{ url_for("static", filename="css/video.css") }}'>
+    <link rel="stylesheet" href='{{ url_for("static", filename="css/style.css") }}'>
+    <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+</head>
+<body class="main" style="color: white;">
+    <!-- Live -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AVGZy8VrSiz-t-2qHBI7WVXyCKBmecQubXzx_bczwZ5lZfzt7dXiUWHgoplH5DtreEWLs8cCP57LPk84&currency=JPY"></script>
+    <!-- Sandbox -->
+    <!-- <script src="https://www.paypal.com/sdk/js?client-id=AZQ-ZnuO0hRiwoG0OTo7rPsUIt1N_plVK3UGSKYRUMSZxenzW9wAHlfljdj3og5HltQ-gjPD9lpTaFsH&currency=JPY"></script> -->
+    <!-- <script src="https://www.paypal.com/sdk/js?client-id=AVGZy8VrSiz-t-2qHBI7WVXyCKBmecQubXzx_bczwZ5lZfzt7dXiUWHgoplH5DtreEWLs8cCP57LPk84&components=buttons"></script> -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;">
+        <a href="/" class="navbar-brand mx-3">
+            <h1 class="display-5">Dremi</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link mx-3" href="/">ホーム</a>
+                <a class="nav-item nav-link mx-3" href="/mypage">マイページ</a>
+                <a class="nav-item nav-link mx-3" href="/mypage/post">投稿</a>
+                <form class="form-inline my-2 my-lg-0" action="/search" method="post" id="searchForm">
+                    <input class="form-control mr-sm-2" type="search" placeholder="検索ワード" aria-label="Search" name="keyword">
+                </form>
+                <button class="btn my-2 my-sm-0 btn-outline-info" type="submit" form="searchForm"><i class="fa fa-search text-info" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </nav>      
+    {% block content %}
+    {% endblock %}
+    <div class="row" align="center">
+        <div class="col-lg-3">
+            <a href="https://hb.afl.rakuten.co.jp/ichiba/25a4ec79.7b9eaed2.25a4ec7a.53e6a372/_RTLink41356?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbook%2F17091308%2F&link_type=pict&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0Iiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MCwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"  ><img src="https://hbb.afl.rakuten.co.jp/hgb/25a4ec79.7b9eaed2.25a4ec7a.53e6a372/?me_id=1213310&item_id=20623599&pc=https%3A%2F%2Fthumbnail.image.rakuten.co.jp%2F%400_mall%2Fbook%2Fcabinet%2F5915%2F2100012915915.gif%3F_ex%3D240x240&s=240x240&t=pict" border="0" style="margin:2px" alt="" title=""></a>
+        </div>
+        <div class="col-lg-3">
+            <a href="https://hb.afl.rakuten.co.jp/ichiba/25a51050.3e4915fd.25a51051.8f5ed8e5/_RTLink41356?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fvanilla%2Fwake20%2F&link_type=pict&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0Iiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MCwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"  ><img src="https://hbb.afl.rakuten.co.jp/hgb/25a51050.3e4915fd.25a51051.8f5ed8e5/?me_id=1192065&item_id=10003795&pc=https%3A%2F%2Fthumbnail.image.rakuten.co.jp%2F%400_mall%2Fvanilla%2Fcabinet%2F500%2Fbene%2Fptc_01.jpg%3F_ex%3D240x240&s=240x240&t=pict" border="0" style="margin:2px" alt="" title=""></a>
+        </div>
+        <div class="col-lg-3">
+            <a href="https://hb.afl.rakuten.co.jp/ichiba/25a51ba3.cd254c91.25a51ba4.580d9ffe/_RTLink41356?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2Fa33dbd778c76749f5e4314a54d39c189%2F&link_type=pict&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0Iiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MCwiYm9yIjoxLCJjb2wiOjAsImJidG4iOjEsInByb2QiOjEsImFtcCI6ZmFsc2V9" target="_blank" rel="nofollow sponsored noopener" style="word-wrap:break-word;"  ><img src="https://hbb.afl.rakuten.co.jp/hgb/25a51ba1.bf2c118d.25a51ba2.9941d810/?me_id=1384677&item_id=10000573&pc=https%3A%2F%2Fthumbnail.image.rakuten.co.jp%2F%400_gold%2Frakutenmobile-store%2Fimg%2Fpc%2Fproduct%2Fiphone-13-pro%2Fmain_00_5c.png%3F_ex%3D240x240&s=240x240&t=pict" border="0" style="margin:2px" alt="" title=""></a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

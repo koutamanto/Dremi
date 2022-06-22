@@ -1,0 +1,139 @@
+{% extends "parent.html" %}
+{% block content %}
+<div class="container-fluid upload_video" hidden>
+    <div class="row-fluid">
+        <div class="col" align="center" style="padding-top: 10vh;padding-bottom: 10vh">
+            <a href="/mypage/post">
+                <button class="btn btn-primary mx-auto">動画をアップロード</button>
+            </a>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="col" align="center">
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">
+                    動画を収益化する方法
+                </h4>
+                <p>1.動画を投稿する際に価格を設定します。</p>
+                <p>2.購入された場合、その売り上げの50%を次の手段で受け取ることができます。</p>
+                <hr>
+                <p class="mb-0">
+                    PayPal(最速) PayPay・LINEPay(おすすめ) 銀行口座振り込み(時間がかかります)等
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="col" align="center">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading text-center">
+                    見放題プランへの登録方法
+                </h4>
+                <p>
+                    月たった5000円ですべての有料動画が見放題になります。
+                </p>
+                <hr>
+                <p class="mb-0">
+                    以下のPayPalボタンから決済をしてください。決済が完了すると、ホーム画面に戻り、全ての有料動画が見放題になります。
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" align="center">
+            <div id="paypal-button-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    paypal.Buttons({
+        style: {
+          layout: 'vertical',
+          color:  'white',
+          shape:  'rect',
+          label:  'paypal'
+        },
+      // Sets up the transaction when a payment button is clicked
+      createOrder: function(data, actions) {
+        return actions.order.create({
+           "purchase_units": [{
+              "amount": {
+                "currency_code": "JPY",
+                "value": "5000",
+                "breakdown": {
+                  "item_total": {  /* Required when including the `items` array */
+                    "currency_code": "JPY",
+                    "value": "5000"
+                  }
+                }
+              },
+              "items": [
+                {
+                  "name": "Dremi 見放題プラン Unlimited 1カ月", /* Shows within upper-right dropdown during payment approval */
+                  "description": "Dremi内の全ての有料動画を視聴できるようになるプランです。", /* Item details will also be in the completed paypal.com transaction view */
+                  "unit_amount": {
+                    "currency_code": "JPY",
+                    "value": "5000"
+                  },
+                  "quantity": "1"
+                },
+              ]
+            }]
+        });
+      },
+
+      // Finalize the transaction after payer approval
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(orderData) {
+          // Successful capture! For dev/demo purposes:
+              console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+              var transaction = orderData.purchase_units[0].payments.captures[0];
+              alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+              document.getElementById("paypal-button-container").hidden = true;
+              var xhr = new XMLHttpRequest();
+              xhr.open("POST", "/subscription/unlimited");
+              xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+              xhr.send(JSON.stringify(
+                {
+                  "user_id": document.cookie.split("user_id=")[1].split(";")[0],
+                  "months": "1"
+                }
+              ))
+              location.href = "/subscription/success/unlimited"
+          // When ready to go live, remove the alert and show a success message within this page. For example:
+          // var element = document.getElementById('paypal-button-container');
+          // element.innerHTML = '';
+          // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+          // Or go to another URL:  actions.redirect('thank_you.html');
+        });
+      }
+    }).render('#paypal-button-container');
+</script>
+<script>
+    console.log(document.cookie.split("user_id="))
+    console.log(document.referrer)
+    if("{{ user_id }}" != "")
+    {
+        document.cookie = "user_id={{ user_id }}";
+        document.getElementsByClassName("upload_video")[0].removeAttribute("hidden");
+    }
+    else
+    {
+        if(!document.cookie.search("user_id="))
+        {
+            if(document.cookie.split("user_id=")[1].split(";")[0])
+            {
+                document.getElementsByClassName("upload_video")[0].removeAttribute("hidden");
+            }
+            else
+            {
+                location.href = "/mypage/login";
+            }    
+        }
+        else
+        {
+            location.href = "/mypage/login";
+        }
+    }
+</script>
+{% endblock %}

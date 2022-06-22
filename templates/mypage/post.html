@@ -1,0 +1,28 @@
+{% extends "parent.html" %}
+{% block content %}
+<form action="/post_video" method="post" class="mb-3" enctype="multipart/form-data">
+    <label for="formTitle" class="form-label">動画タイトル</label>
+    <input class="form-control" type="text" id="formTitle" name="title" placeholder="【神回】水飲んでみた">
+    <label for="formDescription" class="form-label">動画の説明</label>
+    <input class="form-control" type="text" id="formDescription" name="description" placeholder="水おいしかったです">
+    <label for="formVideoFile" class="form-label">動画ファイル</label>
+    <input class="form-control" type="file" id="formVideoFile" name="video">
+    <label for="formThumbFile" class="form-label">サムネイルの画像ファイル</label>
+    <input class="form-control" type="file" id="formThumbFile" name="thumb">
+    <input type="hidden" name="user_id" value="" id="user_id">
+    <label for="formPrice" class="form-label">価格</label>
+    <input class="form-control" type="number" id="formPrice" name="price" placeholder="0(通常、全体公開したい場合は0を選択)">
+    <button type="submit" class="btn btn-primary mb-3">アップロード</button>
+</form>
+<script>
+    var cookiesArray = document.cookie.split(";");
+    for(var c of cookiesArray){ //一つ一つ取り出して
+        var cArray = c.split('='); //さらに=で分割して配列に
+        if( cArray[0] == 'user_id'){ // 取り出したいkeyと合致したら
+            console.log(cArray[1]);  // [key,value]
+            var user_id = cArray[1]
+        }
+    }
+    document.getElementById("user_id").value = user_id;
+</script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "parent.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form class="mb-3" action="/login" method="post">
+                <label for="EmailForm" class="form-label">メールアドレス</label>
+                <input type="email" class="form-control" id="EmailForm" placeholder="name@example.com" name="email">
+                <label for="PasswordForm" class="form-label">パスワード</label>
+                <input type="password" class="form-control" id="PasswordForm" placeholder="Example1234" name="password">
+                <button type="submit" class="btn btn-primary">ログイン</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label for="RegisterButton" class="form-label">アカウントをお持ちでない方</label>
+            <a href="/mypage/register"><button class="btn btn-success" id="RegisterButton">新規登録</button></a>
+        </div>
+    </div>
+</div>
+{% endblock %}

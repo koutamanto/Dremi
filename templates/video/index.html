@@ -1,0 +1,142 @@
+{% extends "parent.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-fluid px-0">
+            <video src="{{ video_url }}" controls class="video d-none d-lg-block" style="height:80vh"></video>
+            <video src="{{ video_url }}" controls class="video d-lg-none" style="width:100vw"></video>
+            <img src="{{ thumb_url }}" alt="" hidden>
+            <div class="alert alert-danger" role="alert" id="badAlert" hidden>
+                おっと！他人を尊重しましょう！
+            </div>
+            <div class="alert alert-success" role="alert" id="goodAlert" hidden>
+                いいね！その調子です！
+            </div>
+            <div class="alert alert-info" role="alert" id="loginAlert" hidden>
+                いいねするにはログインが必要です。<a href="/mypage">ログイン・新規登録はこちら</a>
+            </div>
+            <h3 class="video-title pt-3">{{title}}</h3>
+            <hr>
+            <div class="row">
+                <div class="col-8">
+                    <p class="video-description pt-3">
+                        {{description}}
+                    </p>
+                </div>
+                <div class="col">
+                    <button class="btn" onclick="SendGood()">
+                        {% if is_liked %}
+                        <i class="fa fa-thumbs-up text-info good-btn" aria-hidden="true" style="font-size: xx-large;"></i>
+                        {% else %}
+                        <i class="fa fa-thumbs-up text-light good-btn" aria-hidden="true" style="font-size: xx-large;"></i>
+                        {% endif %}
+                    </button>
+                    <button class="btn" onclick="SendBad()">
+                        <i class="fa fa-thumbs-down text-light bad-btn" aria-hidden="true" style="font-size: xx-large;"></i>
+                    </button>
+                </div>
+            </div>
+            <p class="video-count">
+                {{count}}回再生
+            </p>
+            <!-- <div id="paypal-button-container" style="padding-right: 40vw;padding-left:40vw;"></div> -->
+        </div>
+    </div>
+</div>
+<script>
+    paypal.Buttons({
+        style: {
+          layout: 'vertical',
+          color:  'white',
+          shape:  'rect',
+          label:  'paypal'
+        },
+      // Sets up the transaction when a payment button is clicked
+      createOrder: function(data, actions) {
+        return actions.order.create({
+           "purchase_units": [{
+              "amount": {
+                "currency_code": "JPY",
+                "value": "500",
+                "breakdown": {
+                  "item_total": {  /* Required when including the `items` array */
+                    "currency_code": "JPY",
+                    "value": "500"
+                  }
+                }
+              },
+              "items": [
+                {
+                  "name": "有料版「{{ title }}」", /* Shows within upper-right dropdown during payment approval */
+                  "description": "有料版の動画です。\n動画説明\n{{ description }}", /* Item details will also be in the completed paypal.com transaction view */
+                  "unit_amount": {
+                    "currency_code": "JPY",
+                    "value": "500"
+                  },
+                  "quantity": "1"
+                },
+              ]
+            }]
+        });
+      },
+
+      // Finalize the transaction after payer approval
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(orderData) {
+          // Successful capture! For dev/demo purposes:
+              console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+              var transaction = orderData.purchase_units[0].payments.captures[0];
+              alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+              document.getElementById("paypal-button-container").innerHTML = "ご購入ありがとうございます。引き続きお楽しみください。";
+          // When ready to go live, remove the alert and show a success message within this page. For example:
+          // var element = document.getElementById('paypal-button-container');
+          // element.innerHTML = '';
+          // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+          // Or go to another URL:  actions.redirect('thank_you.html');
+        });
+      }
+    }).render('#paypal-button-container');
+
+</script>
+<script>
+    window.onload = function () {
+        if(document.getElementsByClassName("video d-lg-none")[0].videoWidth <= document.getElementsByClassName("video d-lg-none")[0].videoHeight )
+        {
+            document.getElementsByClassName("video d-lg-none")[0].setAttribute("style", "height: 100vw;");
+        }
+    }
+    function SendGood() {
+        if(document.getElementsByClassName("good-btn")[0].className == "fa fa-thumbs-up text-light good-btn")
+        {
+            document.getElementsByClassName("good-btn")[0].className = "fa fa-thumbs-up text-info good-btn";
+        }
+        else if(document.getElementsByClassName("good-btn")[0].className == "fa fa-thumbs-up text-info good-btn")
+        {
+            document.getElementsByClassName("good-btn")[0].className = "fa fa-thumbs-up text-light good-btn";
+        }
+        if(document.cookie.split("user_id=")[1] != undefined)
+        {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/like");
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify(
+                {
+                    "video_id": location.href.split("watch/")[1],
+                    "user_id": document.cookie.split("user_id=")[1].split(";")[0]
+                }
+            ));
+            document.getElementById("badAlert").hidden = true;
+            document.getElementById("goodAlert").removeAttribute("hidden");
+        }
+        else
+        {
+            document.getElementById("badAlert").hidden = true;
+            document.getElementById("loginAlert").removeAttribute("hidden");
+        }
+    }
+    function SendBad() {
+        document.getElementById("goodAlert").hidden = true;
+        document.getElementById("badAlert").removeAttribute("hidden");
+    }
+</script>
+{% endblock %}

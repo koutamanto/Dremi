@@ -1,0 +1,12 @@
+.top-bar {
+    width: 100vw;
+}
+.main {
+    /* From https://css.glass */
+    background: rgba(49, 212, 226, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.2px);
+    -webkit-backdrop-filter: blur(5.2px);
+    border: 1px solid rgba(49, 212, 226, 0.22);
+}
